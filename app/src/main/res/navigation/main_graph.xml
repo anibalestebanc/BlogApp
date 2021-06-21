@@ -10,7 +10,7 @@
         android:name="com.example.blogapp.ui.home.HomeScreenFragment"
         android:label="fragment_home_screen"
         tools:layout="@layout/fragment_home_screen" />
-    
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="cl.cencosud.login.LoginFragment"
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.blogapp.ui.auth.RegisterFragment"
+        android:name="cl.cencosud.register.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action

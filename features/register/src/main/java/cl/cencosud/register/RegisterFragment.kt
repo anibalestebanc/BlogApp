@@ -1,4 +1,4 @@
-package com.example.blogapp.ui.auth
+package cl.cencosud.register
 
 import android.os.Bundle
 import android.util.Log
@@ -9,18 +9,18 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.blogapp.R
 import com.example.blogapp.core.Result
-import com.example.blogapp.data.remote.auth.AuthDataSource
 import com.example.blogapp.databinding.FragmentRegisterBinding
-import com.example.blogapp.domain.auth.AuthRepoImpl
-import com.example.blogapp.presentation.auth.AuthViewModel
-import com.example.blogapp.presentation.auth.AuthViewModelFactory
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     private lateinit var binding: FragmentRegisterBinding
-    private val viewModel by viewModels<AuthViewModel> { AuthViewModelFactory(AuthRepoImpl(
-            AuthDataSource()
-    )) }
+    private val viewModel by viewModels<RegisterViewModel> {
+        RegisterModelFactory(
+            RegisterRepositoryImpl(
+                RemoteDataSource()
+            )
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,16 +36,22 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             val confirmPassword = binding.editTextConfirmPassword.text.toString().trim()
             val email = binding.editTextEmail.text.toString().trim()
 
-            if (validateCredentials(password, confirmPassword, username, email)) return@setOnClickListener
-            createUser(username,password,email)
+            if (validateCredentials(
+                    password,
+                    confirmPassword,
+                    username,
+                    email
+                )
+            ) return@setOnClickListener
+            createUser(username, password, email)
 
             Log.d("signUpData", "data: $username $password $confirmPassword $email ")
         }
     }
 
     private fun createUser(username: String, password: String, email: String) {
-        viewModel.signUp(email,password,username).observe(viewLifecycleOwner, Observer { result ->
-            when(result) {
+        viewModel.signUp(email, password, username).observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
                 is Result.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
                     binding.btnSignup.isEnabled = false
@@ -62,7 +68,12 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         })
     }
 
-    private fun validateCredentials(password: String, confirmPassword: String, username: String, email: String): Boolean {
+    private fun validateCredentials(
+        password: String,
+        confirmPassword: String,
+        username: String,
+        email: String
+    ): Boolean {
         if (password != confirmPassword) {
             binding.editTextConfirmPassword.error = "Password does not match"
             binding.editTextPassword.error = "Password does not match"
