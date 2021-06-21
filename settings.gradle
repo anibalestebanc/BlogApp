@@ -1,2 +1,5 @@
 include ':app'
 rootProject.name = "BlogApp"
+include ':features:login'
+include ':features:register'
+include ':features:home'
