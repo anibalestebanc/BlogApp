@@ -11,14 +11,7 @@ import kotlinx.coroutines.Dispatchers
 
 class AuthViewModel(private val repo: AuthRepo) : ViewModel() {
 
-    fun signIn(email: String, password: String) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
-        emit(Result.Loading())
-        try {
-            emit(Result.Success(repo.signIn(email, password)))
-        } catch (e: Exception) {
-            emit(Result.Failure(e))
-        }
-    }
+
 
     fun signUp(email: String, password: String, username: String) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
         emit(Result.Loading())

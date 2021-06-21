@@ -10,9 +10,10 @@
         android:name="com.example.blogapp.ui.home.HomeScreenFragment"
         android:label="fragment_home_screen"
         tools:layout="@layout/fragment_home_screen" />
+    
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.blogapp.ui.auth.LoginFragment"
+        android:name="cl.cencosud.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
