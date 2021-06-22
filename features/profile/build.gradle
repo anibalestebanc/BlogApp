@@ -51,14 +51,14 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:20.0.2'
 
     // Navigation
-  /*  implementation "androidx.navigation:navigation-fragment-ktx:2.3.3"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.3"*/
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.3"
 
     // Viewmodel and livedata KTX
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+/*    implementation 'androidx.legacy:legacy-support-v4:1.0.0'*/
 
     // Play services coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'

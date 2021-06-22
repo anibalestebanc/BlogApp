@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/homeScreenFragment"
-        android:name="cl.cencosud.home.home.HomeScreenFragment"
+        android:name="cl.cencosud.home.ui.home.HomeScreenFragment"
         android:label="fragment_home_screen"
         tools:layout="@layout/fragment_home_screen" />
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="cl.cencosud.login.LoginFragment"
+        android:name="cl.cencosud.login.ui.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="cl.cencosud.register.RegisterFragment"
+        android:name="cl.cencosud.register.ui.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="cl.cencosud.home.camera.CameraFragment"
+        android:name="cl.cencosud.home.ui.camera.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera" >
         <action
@@ -58,12 +58,12 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="cl.cencosud.home.profile.ProfileFragment"
+        android:name="cl.cencosud.home.ui.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/setupProfileFragment"
-        android:name="cl.cencosud.profile.SetupProfileFragment"
+        android:name="cl.cencosud.profile.ui.SetupProfileFragment"
         android:label="fragment_setup_profile"
         tools:layout="@layout/fragment_setup_profile" >
         <action
