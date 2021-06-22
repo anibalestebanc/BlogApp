@@ -6,16 +6,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
-import com.example.blogapp.R
 import com.example.blogapp.core.Result
-import com.example.blogapp.databinding.FragmentLoginBinding
+import androidx.navigation.fragment.findNavController
+import cl.cencosud.login.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val firebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private lateinit var binding:FragmentLoginBinding
+    private lateinit var binding: FragmentLoginBinding
     private val viewModel by viewModels<LoginViewModel> { LoginModelFactory(LoginRepositoryImpl(
         CacheDataSource()
     )) }
@@ -30,11 +29,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun isUserLoggedIn() {
         firebaseAuth.currentUser?.let { user ->
-            if(user.displayName.isNullOrEmpty()) {
+           /* if(user.displayName.isNullOrEmpty()) {
                 findNavController().navigate(R.id.action_loginFragment_to_setupProfileFragment)
             }else{
                 findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
-            }
+            }*/
         }
     }
 
@@ -49,7 +48,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun goToSignUpPage() {
         binding.txtSignup.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+           // findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
     }
 
@@ -79,11 +78,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         "Welcome ${result.data?.email}",
                         Toast.LENGTH_SHORT
                     ).show()
-                    if(result.data?.displayName.isNullOrEmpty()) {
+                   /* if(result.data?.displayName.isNullOrEmpty()) {
                         findNavController().navigate(R.id.action_loginFragment_to_setupProfileFragment)
                     }else{
                         findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
-                    }
+                    }*/
                 }
                 is Result.Failure -> {
                     binding.btnSignin.isEnabled = true

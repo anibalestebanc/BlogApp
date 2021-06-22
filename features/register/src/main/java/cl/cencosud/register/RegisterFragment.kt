@@ -7,9 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.example.blogapp.R
+import cl.cencosud.register.databinding.FragmentRegisterBinding
 import com.example.blogapp.core.Result
-import com.example.blogapp.databinding.FragmentRegisterBinding
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
@@ -58,7 +57,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 }
                 is Result.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    findNavController().navigate(R.id.action_registerFragment_to_setupProfileFragment)
+                    //findNavController().navigate(R.id.action_registerFragment_to_setupProfileFragment)
                 }
                 is Result.Failure -> {
                     binding.btnSignup.isEnabled = true

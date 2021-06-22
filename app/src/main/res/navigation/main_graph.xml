@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeScreenFragment"
-        android:name="com.example.blogapp.ui.home.HomeScreenFragment"
+        android:name="cl.cencosud.home.home.HomeScreenFragment"
         android:label="fragment_home_screen"
         tools:layout="@layout/fragment_home_screen" />
 
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="com.example.blogapp.ui.camera.CameraFragment"
+        android:name="cl.cencosud.home.camera.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera" >
         <action
@@ -58,12 +58,12 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.blogapp.ui.profile.ProfileFragment"
+        android:name="cl.cencosud.home.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/setupProfileFragment"
-        android:name="com.example.blogapp.ui.auth.SetupProfileFragment"
+        android:name="cl.cencosud.profile.SetupProfileFragment"
         android:label="fragment_setup_profile"
         tools:layout="@layout/fragment_setup_profile" >
         <action
