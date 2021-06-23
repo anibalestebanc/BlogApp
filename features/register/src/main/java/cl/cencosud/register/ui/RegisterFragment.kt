@@ -6,15 +6,18 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import cl.cencosud.register.*
+import cl.cencosud.register.R
 import cl.cencosud.register.data.RegisterRepositoryImpl
 import cl.cencosud.register.data.RemoteDataSource
 import cl.cencosud.register.databinding.FragmentRegisterBinding
-import com.example.blogapp.core.Result
+import cl.cencosud.register.presentation.RegisterModelFactory
+import cl.cencosud.register.presentation.RegisterViewModel
+import cl.cencosud.blogapp.android.core.Result
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     private lateinit var binding: FragmentRegisterBinding
+
     private val viewModel by viewModels<RegisterViewModel> {
         RegisterModelFactory(
             RegisterRepositoryImpl(
@@ -102,5 +105,4 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         }
         return false
     }
-
 }

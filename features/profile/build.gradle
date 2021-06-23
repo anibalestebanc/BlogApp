@@ -7,11 +7,11 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "cl.cencosud.profile"
+/*        applicationId "cl.cencosud.profile"*/
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+      /*  versionCode 1
+        versionName "1.0"*/
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -51,8 +51,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:20.0.2'
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.3"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.3"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:2.3.5"
 
     // Viewmodel and livedata KTX
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"

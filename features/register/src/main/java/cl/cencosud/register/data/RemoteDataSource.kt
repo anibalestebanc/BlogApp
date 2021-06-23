@@ -1,6 +1,6 @@
 package cl.cencosud.register.data
 
-import com.example.blogapp.data.model.User
+import cl.cencosud.blogapp.android.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore

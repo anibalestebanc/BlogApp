@@ -17,7 +17,7 @@ import cl.cencosud.profile.data.ProfileRepositoryImpl
 import cl.cencosud.profile.databinding.FragmentSetupProfileBinding
 import cl.cencosud.profile.presentation.ProfileViewModel
 import cl.cencosud.profile.presentation.ProfileViewModelFactory
-import com.example.blogapp.core.Result
+import cl.cencosud.blogapp.android.core.Result
 
 class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
 

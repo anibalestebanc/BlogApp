@@ -3,17 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
-        android:id="@+id/homeScreenFragment"
-        android:name="cl.cencosud.home.ui.home.HomeScreenFragment"
-        android:label="fragment_home_screen"
-        tools:layout="@layout/fragment_home_screen" />
+        android:id="@+id/mainFragment"
+        android:name="cl.cencosud.blogapp.android.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
 
-    <fragment
+        <action
+            android:id="@+id/go_to_login"
+            app:destination="@+id/dynamicFeatureLogin"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+
+    <include-dynamic
+        android:id="@id/dynamicFeatureLogin"
+        android:name="cl.cencosud.blogapp.login"
+        app:moduleName="login"
+        app:graphResName="login_nav_graph" />
+
+
+    <!--    <fragment
+            android:id="@+id/homeScreenFragment"
+            android:name="cl.cencosud.blogapp.home.ui.home.HomeScreenFragment"
+            android:label="fragment_home_screen"
+            tools:layout="@layout/fragment_home_screen" />-->
+
+
+  <!--  <fragment
         android:id="@+id/loginFragment"
-        android:name="cl.cencosud.login.ui.LoginFragment"
+        android:name="cl.cencosud.blogapp.login.ui.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -49,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="cl.cencosud.home.ui.camera.CameraFragment"
+        android:name="cl.cencosud.blogapp.home.ui.camera.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera" >
         <action
@@ -58,7 +81,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="cl.cencosud.home.ui.profile.ProfileFragment"
+        android:name="cl.cencosud.blogapp.home.ui.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
@@ -73,5 +96,8 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
+    </fragment>-->
+
+
+
 </navigation>

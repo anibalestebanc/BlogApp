@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import cl.cencosud.profile.domain.ProfileRepository
-import com.example.blogapp.core.Result
+import cl.cencosud.blogapp.android.core.Result
 import kotlinx.coroutines.Dispatchers
 
 class ProfileViewModel(private val repo: ProfileRepository) : ViewModel() {

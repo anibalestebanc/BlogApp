@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import cl.cencosud.register.domain.RegisterRepository
-import com.example.blogapp.core.Result
+import cl.cencosud.blogapp.android.core.Result
 import kotlinx.coroutines.Dispatchers
 
 class RegisterViewModel(private val repository: RegisterRepository) : ViewModel() {
