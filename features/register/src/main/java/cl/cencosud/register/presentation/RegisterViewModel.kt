@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import cl.cencosud.register.domain.RegisterRepository
 import cl.cencosud.blogapp.android.core.Result
 import kotlinx.coroutines.Dispatchers
+import java.lang.IllegalArgumentException
 
 class RegisterViewModel(private val repository: RegisterRepository) : ViewModel() {
 
@@ -21,8 +22,12 @@ class RegisterViewModel(private val repository: RegisterRepository) : ViewModel(
         }
 }
 
+@Suppress("UNCHECKED_CAST")
 class RegisterModelFactory(private val repository: RegisterRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(RegisterViewModel::class.java).newInstance(repository)
+        if (modelClass.isAssignableFrom(RegisterViewModel::class.java)){
+            return RegisterViewModel(repository) as T
+        }
+        throw IllegalArgumentException("view model not found")
     }
 }

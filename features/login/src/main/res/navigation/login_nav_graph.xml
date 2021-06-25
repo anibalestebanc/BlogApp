@@ -12,14 +12,24 @@
 
         <action
             android:id="@+id/got_to_home"
-            app:destination="@+id/dynamicFeatureHome" />
+            app:destination="@+id/homeActivity"/>
+
+        <action
+            android:id="@+id/got_to_register"
+            app:destination="@+id/dynamicFeatureRegister" />
 
     </fragment>
 
+    <activity
+        android:id="@id/homeActivity"
+        android:name="cl.cencosud.blogapp.home.ui.HomeActivity"
+        app:moduleName="home"
+        android:label="activity_home" />
+
     <include-dynamic
-        android:id="@id/dynamicFeatureHome"
-        android:name="cl.cencosud.blogapp.home"
-        app:graphResName="home_nav_graph"
-        app:moduleName="home" />
+        android:id="@id/dynamicFeatureRegister"
+        android:name="cl.cencosud.blogapp.register"
+        app:graphResName="register_nav_graph"
+        app:moduleName="register" />
 
 </navigation>

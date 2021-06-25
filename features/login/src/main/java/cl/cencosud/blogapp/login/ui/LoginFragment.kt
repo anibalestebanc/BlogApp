@@ -9,54 +9,44 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cl.cencosud.blogapp.android.core.Result
 import cl.cencosud.blogapp.login.R
-import cl.cencosud.blogapp.login.data.CacheDataSource
 import cl.cencosud.blogapp.login.data.LoginRepositoryImpl
+import cl.cencosud.blogapp.login.data.RemoteDataSource
 import cl.cencosud.blogapp.login.databinding.FragmentLoginBinding
 import cl.cencosud.blogapp.login.presentation.LoginModelFactory
 import cl.cencosud.blogapp.login.presentation.LoginViewModel
-import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
-    private val firebaseAuth by lazy { FirebaseAuth.getInstance() }
     private lateinit var binding: FragmentLoginBinding
-    private val viewModel by viewModels<LoginViewModel> { LoginModelFactory(
-        LoginRepositoryImpl(
-        CacheDataSource()
-    )
-    ) }
+    private val viewModel by viewModels<LoginViewModel> {
+        LoginModelFactory(
+            LoginRepositoryImpl(
+                RemoteDataSource()
+            )
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentLoginBinding.bind(view)
-        isUserLoggedIn()
         doLogin()
         goToSignUpPage()
     }
 
-    private fun isUserLoggedIn() {
-        firebaseAuth.currentUser?.let { user ->
-           /* if(user.displayName.isNullOrEmpty()) {
-                findNavController().navigate(R.id.action_loginFragment_to_setupProfileFragment)
-            }else{
-                findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
-            }*/
-        }
-    }
 
     private fun doLogin() {
         binding.btnSignin.setOnClickListener {
-            findNavController().navigate(R.id.got_to_home)
-           /* val email = binding.editTextEmail.text.toString().trim()
+            val email = binding.editTextEmail.text.toString().trim()
             val password = binding.editTextPassword.text.toString().trim()
             validateCredentials(email, password)
-            signIn(email,password)*/
+            signIn(email, password)
         }
     }
 
     private fun goToSignUpPage() {
         binding.txtSignup.setOnClickListener {
-           // findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+            findNavController().navigate(R.id.got_to_register)
+            // findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
     }
 
@@ -72,8 +62,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
-    private fun signIn(email: String, password: String){
-        viewModel.signIn(email,password).observe(viewLifecycleOwner, Observer { result ->
+    private fun signIn(email: String, password: String) {
+        viewModel.signIn(email, password).observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Result.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
@@ -86,11 +76,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         "Welcome ${result.data?.email}",
                         Toast.LENGTH_SHORT
                     ).show()
-                   /* if(result.data?.displayName.isNullOrEmpty()) {
-                        findNavController().navigate(R.id.action_loginFragment_to_setupProfileFragment)
-                    }else{
-                        findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
-                    }*/
+                    findNavController().navigate(R.id.got_to_home)
+                    requireActivity().finish()
                 }
                 is Result.Failure -> {
                     binding.btnSignin.isEnabled = true

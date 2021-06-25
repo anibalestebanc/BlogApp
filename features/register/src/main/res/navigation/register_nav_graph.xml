@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/registerFragment">
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="cl.cencosud.register.ui.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register">
+
+        <action
+            android:id="@+id/got_to_home"
+            app:destination="@+id/dynamicFeatureHome"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/registerFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <include-dynamic
+        android:id="@id/dynamicFeatureHome"
+        android:name="cl.cencosud.blogapp.home"
+        app:graphResName="home_nav_graph"
+        app:moduleName="home" />
+
+</navigation>
