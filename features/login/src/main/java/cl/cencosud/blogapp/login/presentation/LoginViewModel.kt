@@ -1,31 +1,32 @@
 package cl.cencosud.blogapp.login.presentation
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import cl.cencosud.blogapp.login.domain.LoginRepository
-import cl.cencosud.blogapp.android.core.Result
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
-class LoginViewModel(private val loginRepository : LoginRepository) : ViewModel() {
+class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
-    fun signIn(email: String, password: String) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
-        emit(Result.Loading())
+    private val _loginState = MutableLiveData<LoginUiState>(LoginUiState.DefaultState)
+    val loginState: LiveData<LoginUiState> = _loginState
+
+
+    fun signIn(email: String, password: String) = viewModelScope.launch {
+        _loginState.value = LoginUiState.Loading
         try {
-            emit(Result.Success(loginRepository.signIn(email, password)))
-        } catch (e: Exception) {
-            emit(Result.Failure(e))
+            loginRepository.signIn(email, password)
+            _loginState.value = LoginUiState.Success
+        } catch (error: Exception) {
+            _loginState.value = LoginUiState.Error(error)
         }
     }
 }
 
 @Suppress("UNCHECKED_CAST")
-class LoginModelFactory(private val loginRepository : LoginRepository) : ViewModelProvider.Factory {
+class LoginModelFactory(private val loginRepository: LoginRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)){
-            return LoginViewModel(loginRepository ) as T
+        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+            return LoginViewModel(loginRepository) as T
         }
         throw IllegalArgumentException("view model not found")
     }

@@ -7,12 +7,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import cl.cencosud.blogapp.android.core.Result
 import cl.cencosud.blogapp.login.R
 import cl.cencosud.blogapp.login.data.LoginRepositoryImpl
-import cl.cencosud.blogapp.login.data.RemoteDataSource
+import cl.cencosud.blogapp.login.data.remote.RemoteDataSourceImpl
 import cl.cencosud.blogapp.login.databinding.FragmentLoginBinding
 import cl.cencosud.blogapp.login.presentation.LoginModelFactory
+import cl.cencosud.blogapp.login.presentation.LoginUiState
 import cl.cencosud.blogapp.login.presentation.LoginViewModel
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -21,7 +21,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private val viewModel by viewModels<LoginViewModel> {
         LoginModelFactory(
             LoginRepositoryImpl(
-                RemoteDataSource()
+                RemoteDataSourceImpl()
             )
         )
     }
@@ -31,6 +31,34 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding = FragmentLoginBinding.bind(view)
         doLogin()
         goToSignUpPage()
+        setUpObservers()
+    }
+
+    private fun setUpObservers() {
+        viewModel.loginState.observe(viewLifecycleOwner, Observer(::renderUiState))
+    }
+
+    private fun renderUiState(loginUiState: LoginUiState) {
+        when (loginUiState) {
+            is LoginUiState.Loading -> {
+                binding.progressBar.visibility = View.VISIBLE
+                binding.btnSignin.isEnabled = false
+            }
+            is LoginUiState.Success -> {
+                binding.progressBar.visibility = View.GONE
+                findNavController().navigate(R.id.got_to_home)
+                requireActivity().finish()
+            }
+            is LoginUiState.Error -> {
+                binding.btnSignin.isEnabled = true
+                binding.progressBar.visibility = View.GONE
+                Toast.makeText(
+                    requireContext(),
+                    "Error: ${loginUiState.error.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
 
@@ -39,14 +67,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val email = binding.editTextEmail.text.toString().trim()
             val password = binding.editTextPassword.text.toString().trim()
             validateCredentials(email, password)
-            signIn(email, password)
+            viewModel.signIn(email, password)
         }
     }
 
     private fun goToSignUpPage() {
         binding.txtSignup.setOnClickListener {
             findNavController().navigate(R.id.got_to_register)
-            // findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
     }
 
@@ -62,33 +89,4 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
-    private fun signIn(email: String, password: String) {
-        viewModel.signIn(email, password).observe(viewLifecycleOwner, Observer { result ->
-            when (result) {
-                is Result.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.btnSignin.isEnabled = false
-                }
-                is Result.Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    Toast.makeText(
-                        requireContext(),
-                        "Welcome ${result.data?.email}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    findNavController().navigate(R.id.got_to_home)
-                    requireActivity().finish()
-                }
-                is Result.Failure -> {
-                    binding.btnSignin.isEnabled = true
-                    binding.progressBar.visibility = View.GONE
-                    Toast.makeText(
-                        requireContext(),
-                        "Error: ${result.exception}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        })
-    }
 }

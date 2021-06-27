@@ -1,13 +1,15 @@
-package cl.cencosud.blogapp.login.data
+package cl.cencosud.blogapp.login.data.remote
 
+import cl.cencosud.blogapp.login.data.data.source.RemoteDataSource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-class RemoteDataSource {
-    suspend fun signIn(email: String, password: String): FirebaseUser? {
+class RemoteDataSourceImpl : RemoteDataSource {
+
+   override suspend fun signIn(email: String, password: String): FirebaseUser? {
         return withContext(Dispatchers.IO) {
             val authResult = FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).await()
             authResult.user
