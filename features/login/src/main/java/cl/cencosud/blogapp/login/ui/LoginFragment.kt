@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import cl.cencosud.blogapp.login.R
 import cl.cencosud.blogapp.login.data.LoginRepositoryImpl
-import cl.cencosud.blogapp.login.data.remote.RemoteDataSourceImpl
+import cl.cencosud.blogapp.login.data.remote.LoginRemoteImpl
 import cl.cencosud.blogapp.login.databinding.FragmentLoginBinding
 import cl.cencosud.blogapp.login.presentation.LoginModelFactory
 import cl.cencosud.blogapp.login.presentation.LoginUiState
@@ -21,7 +21,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private val viewModel by viewModels<LoginViewModel> {
         LoginModelFactory(
             LoginRepositoryImpl(
-                RemoteDataSourceImpl()
+                LoginRemoteImpl()
             )
         )
     }

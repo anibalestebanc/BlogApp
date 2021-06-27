@@ -1,7 +1,7 @@
-package cl.cencosud.blogapp.login.data.data.source
+package cl.cencosud.blogapp.login.data.source
 
 import com.google.firebase.auth.FirebaseUser
 
-interface RemoteDataSource {
+interface LoginRemote {
     suspend fun signIn(email: String, password: String): FirebaseUser?
 }

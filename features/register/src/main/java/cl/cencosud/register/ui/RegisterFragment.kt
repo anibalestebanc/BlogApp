@@ -8,11 +8,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import cl.cencosud.register.R
 import cl.cencosud.register.data.RegisterRepositoryImpl
-import cl.cencosud.register.data.RemoteDataSource
+import cl.cencosud.register.data.remote.RegisterRemoteImpl
 import cl.cencosud.register.databinding.FragmentRegisterBinding
 import cl.cencosud.register.presentation.RegisterModelFactory
 import cl.cencosud.register.presentation.RegisterViewModel
-import cl.cencosud.blogapp.android.core.Result
+import cl.cencosud.register.presentation.RegisterUiState
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
@@ -21,7 +21,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     private val viewModel by viewModels<RegisterViewModel> {
         RegisterModelFactory(
             RegisterRepositoryImpl(
-                RemoteDataSource()
+                RegisterRemoteImpl()
             )
         )
     }
@@ -30,6 +30,28 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRegisterBinding.bind(view)
         signUp()
+        setUpObservers()
+    }
+
+    private fun setUpObservers() {
+        viewModel.registerStates.observe(viewLifecycleOwner, Observer(::renderStates))
+    }
+
+    private fun renderStates(uiState: RegisterUiState)  {
+        when (uiState) {
+            is RegisterUiState.Loading -> {
+                binding.progressBar.visibility = View.VISIBLE
+                binding.btnSignup.isEnabled = false
+            }
+            is RegisterUiState.Success -> {
+                binding.progressBar.visibility = View.GONE
+                //findNavController().navigate(R.id.action_registerFragment_to_setupProfileFragment)
+            }
+            is RegisterUiState.Error -> {
+                binding.btnSignup.isEnabled = true
+                binding.progressBar.visibility = View.GONE
+            }
+        }
     }
 
     private fun signUp() {
@@ -54,22 +76,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun createUser(username: String, password: String, email: String) {
-        viewModel.signUp(email, password, username).observe(viewLifecycleOwner, Observer { result ->
-            when (result) {
-                is Result.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.btnSignup.isEnabled = false
-                }
-                is Result.Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    //findNavController().navigate(R.id.action_registerFragment_to_setupProfileFragment)
-                }
-                is Result.Failure -> {
-                    binding.btnSignup.isEnabled = true
-                    binding.progressBar.visibility = View.GONE
-                }
-            }
-        })
+        viewModel.signUp(email, password, username)
     }
 
     private fun validateCredentials(

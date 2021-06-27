@@ -1,29 +1,34 @@
-package cl.cencosud.blogapp.home.presentation
+package cl.cencosud.blogapp.home.presentation.camera
 
 import android.graphics.Bitmap
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
-import cl.cencosud.blogapp.android.core.Result
-import cl.cencosud.blogapp.home.domain.camera.CameraRepo
-import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.*
+import cl.cencosud.blogapp.home.domain.camera.CameraRepository
+import kotlinx.coroutines.launch
 import java.lang.Exception
+import java.lang.IllegalArgumentException
 
-class CameraViewModel(private val repo: CameraRepo): ViewModel() {
+class CameraViewModel(private val repo: CameraRepository) : ViewModel() {
+    private val _cameraStates = MutableLiveData<CameraUiState>(CameraUiState.DefaultState)
+    val cameraStates: LiveData<CameraUiState> = _cameraStates
 
-    fun uploadPhoto(imageBitmap: Bitmap, description: String) = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
-        emit(Result.Loading())
+    fun uploadPhoto(imageBitmap: Bitmap, description: String) = viewModelScope.launch {
+
+        _cameraStates.value = CameraUiState.Loading
         try {
-            emit(Result.Success(repo.uploadPhoto(imageBitmap,description)))
-        }catch (e: Exception) {
-            emit(Result.Failure(e))
+            repo.uploadPhoto(imageBitmap, description)
+            _cameraStates.value = CameraUiState.Success
+        } catch (error: Exception) {
+            _cameraStates.value = CameraUiState.Error(error)
         }
     }
 }
 
-class CameraViewModelFactory(private val repo: CameraRepo) : ViewModelProvider.Factory {
+@Suppress("UNCHECKED_CAST")
+class CameraViewModelFactory(private val repository: CameraRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(CameraRepo::class.java).newInstance(repo)
+        if (modelClass.isAssignableFrom(CameraViewModel::class.java)) {
+            return CameraViewModel(repository) as T
+        }
+        throw IllegalArgumentException("view model not found")
     }
 }

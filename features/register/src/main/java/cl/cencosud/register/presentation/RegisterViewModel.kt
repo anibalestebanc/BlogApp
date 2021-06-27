@@ -1,25 +1,27 @@
 package cl.cencosud.register.presentation
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import cl.cencosud.register.domain.RegisterRepository
 import cl.cencosud.blogapp.android.core.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 class RegisterViewModel(private val repository: RegisterRepository) : ViewModel() {
 
-    fun signUp(email: String, password: String, username: String) =
-        liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
-            emit(Result.Loading())
-            try {
-                emit(Result.Success(repository.signUp(email, password, username)))
-            } catch (e: Exception) {
-                emit(Result.Failure(e))
-            }
+    private val _registerStates = MutableLiveData<RegisterUiState>(RegisterUiState.DefaultState)
+    val registerStates : LiveData<RegisterUiState> = _registerStates
+
+
+    fun signUp(email: String, password: String, username: String) = viewModelScope.launch {
+        _registerStates.value = RegisterUiState.Loading
+        try {
+            repository.signUp(email, password, username)
+            _registerStates.value = RegisterUiState.Success
+        } catch (error: Exception) {
+            _registerStates.value =  RegisterUiState.Error(error)
         }
+    }
 }
 
 @Suppress("UNCHECKED_CAST")

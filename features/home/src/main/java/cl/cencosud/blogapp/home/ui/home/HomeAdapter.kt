@@ -11,7 +11,7 @@ import cl.cencosud.blogapp.android.core.BaseViewHolder
 import cl.cencosud.blogapp.android.core.TimeUtils
 import cl.cencosud.blogapp.android.data.model.Post
 
-class HomeScreenAdapter(private val postList: List<Post>) :
+class HomeAdapter(private val postList: List<Post>) :
     RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {

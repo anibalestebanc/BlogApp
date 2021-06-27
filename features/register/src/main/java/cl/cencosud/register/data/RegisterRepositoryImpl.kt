@@ -1,9 +1,10 @@
 package cl.cencosud.register.data
 
+import cl.cencosud.register.data.source.RegisterRemote
 import cl.cencosud.register.domain.RegisterRepository
 import com.google.firebase.auth.FirebaseUser
 
-class RegisterRepositoryImpl(private val remoteDataSource: RemoteDataSource) : RegisterRepository {
+class RegisterRepositoryImpl(private val remote: RegisterRemote) : RegisterRepository {
     override suspend fun signUp(email: String, password: String, username: String): FirebaseUser? =
-        remoteDataSource.signUp(email, password, username)
+        remote.signUp(email, password, username)
 }
