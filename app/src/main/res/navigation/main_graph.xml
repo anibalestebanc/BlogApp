@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="cl.cencosud.blogapp.android.MainFragment"
+        android:name="cl.cencosud.blogapp.android.ui.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
 

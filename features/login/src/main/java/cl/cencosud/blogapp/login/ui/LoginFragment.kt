@@ -7,21 +7,33 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import cl.cencosud.blogapp.android.BlogApplication
 import cl.cencosud.blogapp.login.R
+import cl.cencosud.blogapp.login.data.mapper.DataUserMapper
 import cl.cencosud.blogapp.login.data.LoginRepositoryImpl
 import cl.cencosud.blogapp.login.data.remote.LoginRemoteImpl
 import cl.cencosud.blogapp.login.databinding.FragmentLoginBinding
+import cl.cencosud.blogapp.login.domain.SignInUseCase
 import cl.cencosud.blogapp.login.presentation.LoginModelFactory
 import cl.cencosud.blogapp.login.presentation.LoginUiState
 import cl.cencosud.blogapp.login.presentation.LoginViewModel
+import cl.cencosud.blogapp.userinfo.data.source.UserCache
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var binding: FragmentLoginBinding
+    private val userCache: UserCache by lazy {
+        (requireActivity().application as BlogApplication).userInfo
+    }
+
     private val viewModel by viewModels<LoginViewModel> {
         LoginModelFactory(
-            LoginRepositoryImpl(
-                LoginRemoteImpl()
+            SignInUseCase(
+                LoginRepositoryImpl(
+                    remote = LoginRemoteImpl(),
+                    cache = userCache,
+                    mapper = DataUserMapper()
+                )
             )
         )
     }
