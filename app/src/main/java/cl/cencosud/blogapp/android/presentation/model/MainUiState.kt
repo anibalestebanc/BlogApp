@@ -1,4 +1,4 @@
-package cl.cencosud.blogapp.android.presentation
+package cl.cencosud.blogapp.android.presentation.model
 
 sealed class MainUiState {
     object DefaultState : MainUiState()

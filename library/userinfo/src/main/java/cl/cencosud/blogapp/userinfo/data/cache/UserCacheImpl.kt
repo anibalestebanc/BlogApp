@@ -7,14 +7,13 @@ import cl.cencosud.blogapp.userinfo.data.cache.UserCacheConstants.KEY_EMAIL
 import cl.cencosud.blogapp.userinfo.data.cache.UserCacheConstants.KEY_NAME
 import cl.cencosud.blogapp.userinfo.data.source.UserCache
 import cl.cencosud.blogapp.userinfo.domain.model.DomainUser
-import cl.cencosud.blogapp.userinfo.domain.model.NotUserLoggedException
+import cl.cencosud.blogapp.userinfo.domain.model.EmptyUserException
 
-class UserCacheImpl(private val context: Application) : UserCache {
+class UserCacheImpl(context: Application) : UserCache {
 
     companion object {
         const val PREFERENCES_NAME = "USER_SAVE_PREFERENCES"
     }
-
     private val preferences =
         context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
@@ -27,12 +26,11 @@ class UserCacheImpl(private val context: Application) : UserCache {
     }
 
     override fun getUser(): DomainUser {
-        val email = preferences.getString(KEY_EMAIL, "")
-            ?: throw NotUserLoggedException("user not logged in")
-        val username = preferences.getString(KEY_EMAIL, "")
+        val email = preferences.getString(KEY_EMAIL, null)
+            ?: throw EmptyUserException("user not logged in")
+        val username = preferences.getString(KEY_NAME, "")
         return DomainUser(email, username)
     }
-
     private inline fun edit(block: SharedPreferences.Editor.() -> Unit) {
         with(preferences.edit()) {
             block()

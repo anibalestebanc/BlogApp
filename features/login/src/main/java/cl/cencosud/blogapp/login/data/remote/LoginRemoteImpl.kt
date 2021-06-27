@@ -16,6 +16,8 @@ class LoginRemoteImpl : LoginRemote {
         withContext(Dispatchers.IO) {
             val authResult = firebase.signInWithEmailAndPassword(email, password).await()
             val email = authResult.user?.email ?: throw LoginFirebaseException("Error to get the user email")
-            return@withContext RemoteUser(email =email, username = authResult.user?.displayName)
+            val displayName = authResult.user?.displayName
+            val photo = authResult.user?.photoUrl
+            return@withContext RemoteUser(email =email, username = displayName)
         }
 }

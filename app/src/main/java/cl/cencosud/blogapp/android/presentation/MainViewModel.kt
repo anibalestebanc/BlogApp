@@ -2,8 +2,10 @@ package cl.cencosud.blogapp.android.presentation
 
 import androidx.lifecycle.*
 import cl.cencosud.blogapp.android.core.Event
+import cl.cencosud.blogapp.android.presentation.model.MainEffect
+import cl.cencosud.blogapp.android.presentation.model.MainUiState
 import cl.cencosud.blogapp.userinfo.domain.GetUserUseCase
-import cl.cencosud.blogapp.userinfo.domain.model.NotUserLoggedException
+import cl.cencosud.blogapp.userinfo.domain.model.EmptyUserException
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val getUserUseCase: GetUserUseCase) : ViewModel() {
@@ -29,7 +31,7 @@ class MainViewModel(private val getUserUseCase: GetUserUseCase) : ViewModel() {
     }
 
     private fun checkException(error: Exception) = when (error) {
-        is NotUserLoggedException -> _mainEffect.value = Event(MainEffect.GoToLogin)
+        is EmptyUserException -> _mainEffect.value = Event(MainEffect.GoToLogin)
         else -> _mainStates.value = MainUiState.Error(error)
     }
 }

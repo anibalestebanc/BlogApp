@@ -38,11 +38,13 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
 
         setupObservers()
 
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(requireContext(), "No se encontro app para abir la camara", Toast.LENGTH_SHORT).show()
+        binding.postImage.setOnClickListener {
+            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            try {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(requireContext(), "No se encontro app para abir la camara", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.btnUploadPhoto.setOnClickListener {
@@ -78,5 +80,4 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
             bitmap = imageBitmap
         }
     }
-
 }

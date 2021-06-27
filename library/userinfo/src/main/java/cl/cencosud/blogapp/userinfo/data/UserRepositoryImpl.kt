@@ -5,7 +5,5 @@ import cl.cencosud.blogapp.userinfo.domain.model.DomainUser
 import cl.cencosud.blogapp.userinfo.domain.repository.UserRepository
 
 class UserRepositoryImpl(private val cache: UserCache) : UserRepository {
-    override suspend fun getLocalUser(): DomainUser {
-      return cache.getUser()
-    }
+    override suspend fun getLocalUser(): DomainUser = cache.getUser()
 }

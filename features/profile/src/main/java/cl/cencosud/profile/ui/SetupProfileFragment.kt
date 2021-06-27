@@ -33,9 +33,11 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
     private val REQUEST_IMAGE_CAPTURE = 1
     private var bitmap: Bitmap? = null
 
-    private val alertDialog = AlertDialog.Builder(requireContext())
-        .setTitle("Uploading photo...")
-        .create()
+    private val alertDialog by lazy {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Uploading photo...")
+            .create()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,9 +57,8 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
             }
         }
 
-        binding.btnCreateProfile.setOnClickListener {
+        binding.btnEditProfile.setOnClickListener {
             val username = binding.etxtUsername.text.toString().trim()
-
             bitmap?.let {
                 if (username.isNotEmpty()) {
                     viewModel.updateUserProfile(imageBitmap = it, username = username)
