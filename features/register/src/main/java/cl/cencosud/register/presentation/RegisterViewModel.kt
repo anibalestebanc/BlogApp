@@ -1,34 +1,33 @@
 package cl.cencosud.register.presentation
 
 import androidx.lifecycle.*
-import cl.cencosud.register.domain.RegisterRepository
-import cl.cencosud.blogapp.android.core.Result
-import kotlinx.coroutines.Dispatchers
+import cl.cencosud.register.domain.SignUpUseCase
+import cl.cencosud.register.domain.model.DomainNewUser
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
-class RegisterViewModel(private val repository: RegisterRepository) : ViewModel() {
+class RegisterViewModel(private val signUpUseCase: SignUpUseCase) : ViewModel() {
 
     private val _registerStates = MutableLiveData<RegisterUiState>(RegisterUiState.DefaultState)
-    val registerStates : LiveData<RegisterUiState> = _registerStates
+    val registerStates: LiveData<RegisterUiState> = _registerStates
 
 
-    fun signUp(email: String, password: String, username: String) = viewModelScope.launch {
+    fun signUp(newUser: DomainNewUser) = viewModelScope.launch {
         _registerStates.value = RegisterUiState.Loading
         try {
-            repository.signUp(email, password, username)
+            signUpUseCase.invoke(newUser)
             _registerStates.value = RegisterUiState.Success
         } catch (error: Exception) {
-            _registerStates.value =  RegisterUiState.Error(error)
+            _registerStates.value = RegisterUiState.Error(error)
         }
     }
 }
 
 @Suppress("UNCHECKED_CAST")
-class RegisterModelFactory(private val repository: RegisterRepository) : ViewModelProvider.Factory {
+class RegisterModelFactory(private val signUpUseCase: SignUpUseCase) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(RegisterViewModel::class.java)){
-            return RegisterViewModel(repository) as T
+        if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
+            return RegisterViewModel(signUpUseCase) as T
         }
         throw IllegalArgumentException("view model not found")
     }

@@ -1,15 +1,17 @@
 package cl.cencosud.register.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import cl.cencosud.register.R
 import cl.cencosud.register.data.RegisterRepositoryImpl
+import cl.cencosud.register.data.mapper.DataNewUserMapper
 import cl.cencosud.register.data.remote.RegisterRemoteImpl
 import cl.cencosud.register.databinding.FragmentRegisterBinding
+import cl.cencosud.register.domain.SignUpUseCase
+import cl.cencosud.register.domain.model.DomainNewUser
 import cl.cencosud.register.presentation.RegisterModelFactory
 import cl.cencosud.register.presentation.RegisterViewModel
 import cl.cencosud.register.presentation.RegisterUiState
@@ -20,8 +22,11 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     private val viewModel by viewModels<RegisterViewModel> {
         RegisterModelFactory(
-            RegisterRepositoryImpl(
-                RegisterRemoteImpl()
+            SignUpUseCase(
+                RegisterRepositoryImpl(
+                    RegisterRemoteImpl(),
+                    DataNewUserMapper()
+                )
             )
         )
     }
@@ -37,7 +42,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         viewModel.registerStates.observe(viewLifecycleOwner, Observer(::renderStates))
     }
 
-    private fun renderStates(uiState: RegisterUiState)  {
+    private fun renderStates(uiState: RegisterUiState) {
         when (uiState) {
             is RegisterUiState.Loading -> {
                 binding.progressBar.visibility = View.VISIBLE
@@ -45,7 +50,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             }
             is RegisterUiState.Success -> {
                 binding.progressBar.visibility = View.GONE
-                //findNavController().navigate(R.id.action_registerFragment_to_setupProfileFragment)
+                requireActivity().onBackPressed()
             }
             is RegisterUiState.Error -> {
                 binding.btnSignup.isEnabled = true
@@ -69,14 +74,12 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                     email
                 )
             ) return@setOnClickListener
-            createUser(username, password, email)
-
-            Log.d("signUpData", "data: $username $password $confirmPassword $email ")
+            createUser(DomainNewUser(username, password, email))
         }
     }
 
-    private fun createUser(username: String, password: String, email: String) {
-        viewModel.signUp(email, password, username)
+    private fun createUser(newUser: DomainNewUser) {
+        viewModel.signUp(newUser)
     }
 
     private fun validateCredentials(
