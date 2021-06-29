@@ -1,9 +1,8 @@
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
-}
+apply plugin : 'com.android.application'
+apply plugin : 'kotlin-android'
+apply plugin : 'com.google.gms.google-services'
+apply plugin : 'com.google.firebase.crashlytics'
+apply from: "${rootProject.projectDir}/flavors.gradle"
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -13,18 +12,22 @@ android {
         applicationId "cl.cencosud.blogapp.android"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+            debuggable true
+        }
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    with flavorConfig
+
     compileOptions {
         sourceCompatibility rootProject.javaVersion
         targetCompatibility rootProject.javaVersion
@@ -43,6 +46,7 @@ android {
     }
 
     dynamicFeatures = [':features:login', ':features:register', ':features:home', ':features:profile']
+
 }
 
 dependencies {
@@ -73,7 +77,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-/*    implementation 'androidx.legacy:legacy-support-v4:1.0.0'*/
+
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     // Viewmodel and livedata KTX
@@ -83,12 +87,6 @@ dependencies {
     // Play services coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesPlayServices"
 
- /*   //Used for StateFlow
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
-
-    // Lifecycle
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01"*/
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

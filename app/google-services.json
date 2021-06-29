@@ -33,6 +33,64 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367461153101:android:84e798f5bdc29760429f04",
+        "android_client_info": {
+          "package_name": "cl.cencosud.blogapp.free"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367461153101-6q2m81hjidqeqpu4aijoobodkhs3u18v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-Lumg-cEXbLL2vOm9RSYdIGOpq0c1XHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367461153101-6q2m81hjidqeqpu4aijoobodkhs3u18v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367461153101:android:85c270d48dfc2ac4429f04",
+        "android_client_info": {
+          "package_name": "cl.cencosud.blogapp.paid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367461153101-6q2m81hjidqeqpu4aijoobodkhs3u18v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-Lumg-cEXbLL2vOm9RSYdIGOpq0c1XHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367461153101-6q2m81hjidqeqpu4aijoobodkhs3u18v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

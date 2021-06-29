@@ -1,35 +1,13 @@
-plugins {
-    id 'com.android.dynamic-feature'
-    id 'kotlin-android'
-}
+apply plugin: 'com.android.dynamic-feature'
+apply plugin: 'kotlin-android'
+apply from: "${rootProject.projectDir}/flavors.gradle"
+
 android {
-    compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
 
-    defaultConfig {
-/*        applicationId "cl.cencosud.blogapp.home"*/
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
+    with flavorConfig
 
     buildFeatures {
         viewBinding true
-    }
-
-    compileOptions {
-        sourceCompatibility rootProject.javaVersion
-        targetCompatibility rootProject.javaVersion
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
     }
 }
 
@@ -57,7 +35,7 @@ dependencies {
 
     // Play services coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesPlayServices"
-    
+
     // Utils
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'

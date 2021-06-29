@@ -1,0 +1,39 @@
+ext.flavorConfig = {
+    flavorDimensions 'version', 'api'
+    productFlavors {
+        free {
+            dimension 'version'
+            applicationId 'cl.cencosud.blogapp.free'
+            versionCode 1
+            versionName '1.1.1'
+        }
+
+        paid {
+            dimension 'version'
+            applicationId 'cl.cencosud.blogapp.paid'
+            versionCode 1
+            versionName '2.0.1'
+        }
+        dev {
+
+            dimension 'api'
+        }
+
+        prod {
+            dimension 'api'
+        }
+    }
+
+    productFlavors.all { flavor ->
+        if (flavor.hasProperty('customApplicationIdSuffix') && isApplicationProject()) {
+            flavor.applicationIdSuffix = flavor.customApplicationIdSuffix
+        }
+        if (flavor.hasProperty('customVersionNameSuffix') && isApplicationProject()) {
+            flavor.versionNameSuffix = flavor.customVersionNameSuffix
+        }
+    }
+}
+
+def isApplicationProject() {
+    return project.android.class.simpleName.startsWith('BaseAppModuleExtension')
+}

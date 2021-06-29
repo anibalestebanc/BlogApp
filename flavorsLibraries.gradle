@@ -1,0 +1,17 @@
+ext.flavorLibrariesConfig = {
+    flavorDimensions 'version', 'api'
+    productFlavors {
+        free {
+            dimension 'version'
+        }
+        paid {
+            dimension 'version'
+        }
+        dev {
+            dimension 'api'
+        }
+        prod {
+            dimension 'api'
+        }
+    }
+}

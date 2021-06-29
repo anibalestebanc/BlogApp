@@ -4,7 +4,6 @@
     package="cl.cencosud.blogapp.android"
     xmlns:tools="http://schemas.android.com/tools">
 
-<!--    <dist:module dist:instant="true" />-->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature

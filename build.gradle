@@ -19,6 +19,33 @@ allprojects {
     }
 }
 
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            android {
+                compileSdkVersion rootProject.compileSdkVersion
+//                buildToolsVersion rootProject.androidBuildToolsVersion
+
+                defaultConfig {
+                    minSdkVersion rootProject.minSdkVersion
+                    targetSdkVersion rootProject.targetSdkVersion
+                    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+                    vectorDrawables.useSupportLibrary = true
+                }
+
+                compileOptions {
+                    sourceCompatibility rootProject.javaVersion
+                    targetCompatibility rootProject.javaVersion
+                }
+
+                kotlinOptions {
+                    jvmTarget = rootProject.javaVersion
+                }
+            }
+        }
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
