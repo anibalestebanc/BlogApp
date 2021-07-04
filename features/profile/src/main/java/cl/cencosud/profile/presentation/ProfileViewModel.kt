@@ -4,9 +4,9 @@ import android.graphics.Bitmap
 import androidx.lifecycle.*
 import cl.cencosud.profile.domain.ProfileRepository
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
+import javax.inject.Inject
 
-class ProfileViewModel(private val repo: ProfileRepository) : ViewModel() {
+class ProfileViewModel @Inject constructor(private val repo: ProfileRepository) : ViewModel() {
 
     private val _profileStates = MutableLiveData<ProfileUiState>(ProfileUiState.DefaultState)
     val profileStates: LiveData<ProfileUiState> = _profileStates

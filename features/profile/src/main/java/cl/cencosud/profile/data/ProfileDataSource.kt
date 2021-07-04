@@ -9,9 +9,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
+import javax.inject.Inject
 
 
-class ProfileDataSource {
+class ProfileDataSource @Inject constructor() {
 
     suspend fun updateUserProfile(imageBitmap: Bitmap, username: String) {
         val user = FirebaseAuth.getInstance().currentUser
@@ -20,7 +21,8 @@ class ProfileDataSource {
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         var downloadUrl = ""
         withContext(Dispatchers.IO) {
-            downloadUrl = imageRef.putBytes(baos.toByteArray()).await().storage.downloadUrl.await().toString()
+            downloadUrl =
+                imageRef.putBytes(baos.toByteArray()).await().storage.downloadUrl.await().toString()
             val profileUpdates = UserProfileChangeRequest.Builder()
                 .setDisplayName(username)
                 .setPhotoUri(Uri.parse(downloadUrl))

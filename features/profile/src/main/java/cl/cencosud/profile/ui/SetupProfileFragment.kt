@@ -3,6 +3,7 @@ package cl.cencosud.profile.ui
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -10,27 +11,19 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import cl.cencosud.profile.*
-import cl.cencosud.profile.data.ProfileDataSource
-import cl.cencosud.profile.data.ProfileRepositoryImpl
+import androidx.lifecycle.ViewModelProvider
+import cl.cencosud.profile.R
 import cl.cencosud.profile.databinding.FragmentSetupProfileBinding
-import cl.cencosud.profile.presentation.ProfileViewModel
-import cl.cencosud.profile.presentation.ProfileViewModelFactory
 import cl.cencosud.profile.presentation.ProfileUiState
+import cl.cencosud.profile.presentation.ProfileViewModel
+import cl.cencosud.profile.ui.utils.inject
+import javax.inject.Inject
+
+private const val REQUEST_IMAGE_CAPTURE = 1
 
 class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
 
-    private lateinit var binding: FragmentSetupProfileBinding
-    private val viewModel by viewModels<ProfileViewModel> {
-        ProfileViewModelFactory(
-            ProfileRepositoryImpl(
-                ProfileDataSource()
-            )
-        )
-    }
-    private val REQUEST_IMAGE_CAPTURE = 1
     private var bitmap: Bitmap? = null
 
     private val alertDialog by lazy {
@@ -39,9 +32,24 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
             .create()
     }
 
+    private var _binding: FragmentSetupProfileBinding? = null
+    private val binding: FragmentSetupProfileBinding get() = _binding!!
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: ProfileViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(ProfileViewModel::class.java)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        inject()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentSetupProfileBinding.bind(view)
+        _binding = FragmentSetupProfileBinding.bind(view)
         setupObservers()
 
         binding.profileImage.setOnClickListener {
@@ -78,7 +86,6 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
             }
             is ProfileUiState.Success -> {
                 alertDialog.dismiss()
-                // findNavController().navigate(R.id.action_setupProfileFragment_to_homeScreenFragment)
             }
             is ProfileUiState.Error -> {
                 alertDialog.dismiss()
@@ -93,6 +100,11 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
             binding.profileImage.setImageBitmap(imageBitmap)
             bitmap = imageBitmap
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }
