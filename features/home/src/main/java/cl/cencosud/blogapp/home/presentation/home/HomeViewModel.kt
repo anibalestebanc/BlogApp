@@ -5,8 +5,9 @@ import cl.cencosud.blogapp.home.domain.home.HomeRepository
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.lang.IllegalArgumentException
+import javax.inject.Inject
 
-class HomeViewModel(private val repo: HomeRepository) : ViewModel() {
+class HomeViewModel @Inject constructor(private val repo: HomeRepository) : ViewModel() {
 
     private val _homeStates = MutableLiveData<HomeUiState>(HomeUiState.DefaultState)
     val homeStates: LiveData<HomeUiState> = _homeStates

@@ -4,15 +4,13 @@ import android.graphics.Bitmap
 import androidx.lifecycle.*
 import cl.cencosud.blogapp.home.domain.camera.CameraRepository
 import kotlinx.coroutines.launch
-import java.lang.Exception
-import java.lang.IllegalArgumentException
+import javax.inject.Inject
 
-class CameraViewModel(private val repo: CameraRepository) : ViewModel() {
+class CameraViewModel @Inject constructor(private val repo: CameraRepository) : ViewModel() {
     private val _cameraStates = MutableLiveData<CameraUiState>(CameraUiState.DefaultState)
     val cameraStates: LiveData<CameraUiState> = _cameraStates
 
     fun uploadPhoto(imageBitmap: Bitmap, description: String) = viewModelScope.launch {
-
         _cameraStates.value = CameraUiState.Loading
         try {
             repo.uploadPhoto(imageBitmap, description)

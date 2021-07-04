@@ -1,35 +1,44 @@
 package cl.cencosud.blogapp.home.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import cl.cencosud.blogapp.home.R
+import androidx.lifecycle.ViewModelProvider
 import cl.cencosud.blogapp.android.core.hide
 import cl.cencosud.blogapp.android.core.show
-import cl.cencosud.blogapp.home.data.home.remote.HomeRemoteImpl
+import cl.cencosud.blogapp.home.R
 import cl.cencosud.blogapp.home.data.home.HomeRepositoryImpl
+import cl.cencosud.blogapp.home.data.home.remote.HomeRemoteImpl
 import cl.cencosud.blogapp.home.databinding.FragmentHomeScreenBinding
 import cl.cencosud.blogapp.home.presentation.home.HomeUiState
 import cl.cencosud.blogapp.home.presentation.home.HomeViewModel
 import cl.cencosud.blogapp.home.presentation.home.HomeViewModelFactory
+import cl.cencosud.blogapp.home.ui.utils.inject
+import javax.inject.Inject
 
 class HomeFragment : Fragment(R.layout.fragment_home_screen) {
 
-    private lateinit var binding: FragmentHomeScreenBinding
-    private val viewModel by viewModels<HomeViewModel> {
-        HomeViewModelFactory(
-            HomeRepositoryImpl(
-                HomeRemoteImpl()
-            )
-        )
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: HomeViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
+    }
+
+    private var _binding: FragmentHomeScreenBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        inject()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHomeScreenBinding.bind(view)
+        _binding = FragmentHomeScreenBinding.bind(view)
         setUpObservers()
     }
 
@@ -58,5 +67,10 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen) {
                 ).show()
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

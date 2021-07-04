@@ -7,8 +7,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class HomeRemoteImpl : HomeRemote {
+class HomeRemoteImpl @Inject constructor() : HomeRemote {
 
     override suspend fun getLatestPosts(): List<Post> = withContext(Dispatchers.IO) {
         val postList = mutableListOf<Post>()

@@ -11,8 +11,9 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.util.*
+import javax.inject.Inject
 
-class CameraRemoteImpl : CameraRemote {
+class CameraRemoteImpl @Inject constructor() : CameraRemote {
 
     override suspend fun uploadPhoto(imageBitmap: Bitmap, description: String) {
         val user = FirebaseAuth.getInstance().currentUser
