@@ -1,5 +1,7 @@
 apply plugin : 'com.android.library'
 apply plugin : 'kotlin-android'
+apply plugin : 'kotlin-kapt'
+apply plugin : 'dagger.hilt.android.plugin'
 apply from: "${rootProject.projectDir}/flavorsLibraries.gradle"
 
 android {
@@ -11,4 +13,11 @@ dependencies {
     implementation "androidx.core:core-ktx:$kotlinCore"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
+
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+    // When using Kotlin.
+    kapt "androidx.hilt:hilt-compiler:1.0.0"
 }

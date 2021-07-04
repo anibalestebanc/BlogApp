@@ -7,10 +7,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 const val USERS_COLLECTION : String = "users"
-class LoginRemoteImpl : LoginRemote {
-
+class  LoginRemoteImpl @Inject constructor()  : LoginRemote {
     private val firebase by lazy { FirebaseAuth.getInstance() }
     private val firebaseFirestore by lazy { FirebaseFirestore.getInstance() }
 

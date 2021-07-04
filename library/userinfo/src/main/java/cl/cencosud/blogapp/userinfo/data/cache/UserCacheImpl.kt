@@ -1,6 +1,5 @@
 package cl.cencosud.blogapp.userinfo.data.cache
 
-import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import cl.cencosud.blogapp.userinfo.data.cache.UserCacheConstants.KEY_EMAIL
@@ -11,7 +10,7 @@ import cl.cencosud.blogapp.userinfo.data.source.UserCache
 import cl.cencosud.blogapp.userinfo.domain.model.DomainUser
 import cl.cencosud.blogapp.userinfo.domain.model.EmptyUserException
 
-class UserCacheImpl(context: Application) : UserCache {
+class UserCacheImpl(context: Context) : UserCache {
 
     companion object {
         const val PREFERENCES_NAME = "USER_SAVE_PREFERENCES"

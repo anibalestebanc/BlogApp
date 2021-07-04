@@ -6,8 +6,9 @@ import cl.cencosud.blogapp.login.data.source.LoginRemote
 import cl.cencosud.blogapp.login.domain.repository.LoginRepository
 import cl.cencosud.blogapp.userinfo.data.source.UserCache
 import cl.cencosud.blogapp.userinfo.domain.model.DomainUser
+import javax.inject.Inject
 
-class LoginRepositoryImpl(
+class LoginRepositoryImpl @Inject constructor (
     private val remote: LoginRemote,
     private val cache: UserCache,
     private val mapper: DataUserMapper

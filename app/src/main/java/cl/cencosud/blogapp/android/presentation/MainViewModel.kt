@@ -6,9 +6,12 @@ import cl.cencosud.blogapp.android.presentation.model.MainEffect
 import cl.cencosud.blogapp.android.presentation.model.MainUiState
 import cl.cencosud.blogapp.userinfo.domain.GetUserUseCase
 import cl.cencosud.blogapp.userinfo.domain.model.EmptyUserException
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(private val getUserUseCase: GetUserUseCase) : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor (private val getUserUseCase: GetUserUseCase) : ViewModel() {
 
     private val _mainStates = MutableLiveData<MainUiState>(MainUiState.DefaultState)
     val mainStates: LiveData<MainUiState> = _mainStates
@@ -33,16 +36,5 @@ class MainViewModel(private val getUserUseCase: GetUserUseCase) : ViewModel() {
     private fun checkException(error: Exception) = when (error) {
         is EmptyUserException -> _mainEffect.value = Event(MainEffect.GoToLogin)
         else -> _mainStates.value = MainUiState.Error(error)
-    }
-}
-
-
-@Suppress("UNCHECKED_CAST")
-class MainViewModelFactory(private val getUserUseCase: GetUserUseCase) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(getUserUseCase) as T
-        }
-        throw IllegalArgumentException("view model not found")
     }
 }

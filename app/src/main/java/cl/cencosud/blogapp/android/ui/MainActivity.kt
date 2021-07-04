@@ -3,7 +3,9 @@ package cl.cencosud.blogapp.android.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import cl.cencosud.blogapp.android.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

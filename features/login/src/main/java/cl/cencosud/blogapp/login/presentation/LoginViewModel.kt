@@ -1,11 +1,15 @@
 package cl.cencosud.blogapp.login.presentation
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cl.cencosud.blogapp.login.domain.SignInUseCase
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
+class LoginViewModel @Inject constructor(private val signInUseCase: SignInUseCase) : ViewModel() {
     private val _loginState = MutableLiveData<LoginUiState>(LoginUiState.DefaultState)
     val loginState: LiveData<LoginUiState> = _loginState
 
@@ -25,14 +29,4 @@ class LoginViewModel(private val signInUseCase: SignInUseCase) : ViewModel() {
         else -> _loginState.value = LoginUiState.Error(error)
     }
 
-}
-
-@Suppress("UNCHECKED_CAST")
-class LoginModelFactory(private val signInUseCase: SignInUseCase) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(signInUseCase) as T
-        }
-        throw IllegalArgumentException("view model not found")
-    }
 }

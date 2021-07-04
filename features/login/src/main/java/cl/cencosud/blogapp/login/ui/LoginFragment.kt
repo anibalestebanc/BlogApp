@@ -1,46 +1,40 @@
 package cl.cencosud.blogapp.login.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import cl.cencosud.blogapp.android.BlogApplication
 import cl.cencosud.blogapp.login.R
-import cl.cencosud.blogapp.login.data.mapper.DataUserMapper
-import cl.cencosud.blogapp.login.data.LoginRepositoryImpl
-import cl.cencosud.blogapp.login.data.remote.LoginRemoteImpl
 import cl.cencosud.blogapp.login.databinding.FragmentLoginBinding
-import cl.cencosud.blogapp.login.domain.SignInUseCase
-import cl.cencosud.blogapp.login.presentation.LoginModelFactory
 import cl.cencosud.blogapp.login.presentation.LoginUiState
 import cl.cencosud.blogapp.login.presentation.LoginViewModel
-import cl.cencosud.blogapp.userinfo.data.source.UserCache
+import cl.cencosud.blogapp.login.ui.utils.inject
+import javax.inject.Inject
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
-    private lateinit var binding: FragmentLoginBinding
-    private val userCache: UserCache by lazy {
-        (requireActivity().application as BlogApplication).userInfo
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: LoginViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
     }
 
-    private val viewModel by viewModels<LoginViewModel> {
-        LoginModelFactory(
-            SignInUseCase(
-                LoginRepositoryImpl(
-                    remote = LoginRemoteImpl(),
-                    cache = userCache,
-                    mapper = DataUserMapper()
-                )
-            )
-        )
+    private  var _binding: FragmentLoginBinding? = null
+    private val binding : FragmentLoginBinding get() = _binding!!
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        inject()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentLoginBinding.bind(view)
+        _binding = FragmentLoginBinding.bind(view)
         doLogin()
         goToSignUpPage()
         setUpObservers()
@@ -73,7 +67,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
-
     private fun doLogin() {
         binding.btnSignin.setOnClickListener {
             val email = binding.editTextEmail.text.toString().trim()
@@ -99,6 +92,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             binding.editTextPassword.error = "Password is empty"
             return
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

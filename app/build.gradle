@@ -1,5 +1,7 @@
 apply plugin : 'com.android.application'
 apply plugin : 'kotlin-android'
+apply plugin : 'kotlin-kapt'
+apply plugin : 'dagger.hilt.android.plugin'
 apply plugin : 'com.google.gms.google-services'
 apply plugin : 'com.google.firebase.crashlytics'
 apply from: "${rootProject.projectDir}/flavors.gradle"
@@ -49,6 +51,10 @@ android {
 
 }
 
+kapt {
+    correctErrorTypes true
+}
+
 dependencies {
 
     api(project(":library:userinfo"))
@@ -58,6 +64,10 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
+
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
+
 
     // Firebase
     implementation "com.google.firebase:firebase-firestore:$firestoreVersion"

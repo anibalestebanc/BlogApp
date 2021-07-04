@@ -7,6 +7,9 @@ ext{
     targetSdkVersion = 30
     buildToolsVersion = "30.0.2"
 
+    hiltVersion = "2.37"
+    daggerVersion = "2.37"
+
     javaVersion = JavaVersion.VERSION_1_8
 
     //android

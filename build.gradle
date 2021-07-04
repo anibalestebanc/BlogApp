@@ -9,6 +9,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "com.google.gms:google-services:$googleServicesVersion"
         classpath "com.google.firebase:firebase-crashlytics-gradle:$crashlyticsVersion"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
     }
 }
 
@@ -24,8 +25,6 @@ subprojects {
         if (project.hasProperty('android')) {
             android {
                 compileSdkVersion rootProject.compileSdkVersion
-//                buildToolsVersion rootProject.androidBuildToolsVersion
-
                 defaultConfig {
                     minSdkVersion rootProject.minSdkVersion
                     targetSdkVersion rootProject.targetSdkVersion
