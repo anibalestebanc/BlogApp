@@ -4,9 +4,9 @@ import cl.cencosud.register.data.mapper.DataNewUserMapper
 import cl.cencosud.register.data.source.RegisterRemote
 import cl.cencosud.register.domain.model.DomainNewUser
 import cl.cencosud.register.domain.repository.RegisterRepository
-import com.google.firebase.auth.FirebaseUser
+import javax.inject.Inject
 
-class RegisterRepositoryImpl(
+class RegisterRepositoryImpl @Inject constructor(
     private val remote: RegisterRemote,
     private val mapper: DataNewUserMapper
 ) : RegisterRepository {

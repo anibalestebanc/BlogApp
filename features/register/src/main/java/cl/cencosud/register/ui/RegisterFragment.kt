@@ -1,39 +1,40 @@
 package cl.cencosud.register.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import cl.cencosud.register.R
-import cl.cencosud.register.data.RegisterRepositoryImpl
-import cl.cencosud.register.data.mapper.DataNewUserMapper
-import cl.cencosud.register.data.remote.RegisterRemoteImpl
 import cl.cencosud.register.databinding.FragmentRegisterBinding
-import cl.cencosud.register.domain.SignUpUseCase
 import cl.cencosud.register.domain.model.DomainNewUser
-import cl.cencosud.register.presentation.RegisterModelFactory
-import cl.cencosud.register.presentation.RegisterViewModel
 import cl.cencosud.register.presentation.RegisterUiState
+import cl.cencosud.register.presentation.RegisterViewModel
+import cl.cencosud.register.ui.utils.inject
+import javax.inject.Inject
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
-    private lateinit var binding: FragmentRegisterBinding
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<RegisterViewModel> {
-        RegisterModelFactory(
-            SignUpUseCase(
-                RegisterRepositoryImpl(
-                    RegisterRemoteImpl(),
-                    DataNewUserMapper()
-                )
-            )
-        )
+    private val viewModel: RegisterViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(RegisterViewModel::class.java)
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        inject()
+    }
+
+    private var _binding: FragmentRegisterBinding? = null
+    private val binding: FragmentRegisterBinding get() = _binding!!
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentRegisterBinding.bind(view)
+        _binding = FragmentRegisterBinding.bind(view)
         signUp()
         setUpObservers()
     }
@@ -114,5 +115,10 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             return true
         }
         return false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
