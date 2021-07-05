@@ -47,7 +47,7 @@ android {
         exclude 'META-INF/LGPL2.1'
     }
 
-    dynamicFeatures = [':features:login', ':features:register', ':features:home', ':features:profile']
+    dynamicFeatures = [':features:login', ':features:register', ':features:home', ':features:profile', ':features:splash']
 
 }
 

@@ -1,0 +1,29 @@
+apply plugin: 'com.android.dynamic-feature'
+apply plugin: 'kotlin-android'
+apply plugin : 'kotlin-kapt'
+apply from: "${rootProject.projectDir}/flavors.gradle"
+
+android {
+    with flavorConfig
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    kapt {
+        correctErrorTypes true
+    }
+}
+
+dependencies {
+    implementation project(":app")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "androidx.core:core-ktx:$kotlinCore"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
+
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.annotation:annotation:1.2.0'
+}

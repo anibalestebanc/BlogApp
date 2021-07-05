@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -20,12 +21,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel: LoginViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
+    private val viewModel by viewModels<LoginViewModel> {
+        viewModelFactory
     }
 
-    private  var _binding: FragmentLoginBinding? = null
-    private val binding : FragmentLoginBinding get() = _binding!!
+    /* private val viewModel: LoginViewModel by lazy {
+         ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
+     }*/
+
+    private var _binding: FragmentLoginBinding? = null
+    private val binding: FragmentLoginBinding get() = _binding!!
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

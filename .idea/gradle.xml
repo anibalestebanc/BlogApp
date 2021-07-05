@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/features/login" />
             <option value="$PROJECT_DIR$/features/profile" />
             <option value="$PROJECT_DIR$/features/register" />
+            <option value="$PROJECT_DIR$/features/splash" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/library/uicomponents" />
             <option value="$PROJECT_DIR$/library/userinfo" />
