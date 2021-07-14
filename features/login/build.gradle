@@ -1,6 +1,8 @@
 apply plugin: 'com.android.dynamic-feature'
 apply plugin: 'kotlin-android'
 apply plugin : 'kotlin-kapt'
+apply plugin : 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 apply from: "${rootProject.projectDir}/flavors.gradle"
 
 android {
@@ -34,6 +36,10 @@ dependencies {
     implementation "com.google.firebase:firebase-firestore:$firestoreVersion"
     implementation "com.google.firebase:firebase-storage:$storageVersion"
     implementation "com.google.firebase:firebase-auth:$firebaseAuthVersion"
+
+    // Firebase Crashlytics
+    implementation "com.google.firebase:firebase-crashlytics-ktx:$crashlyticsKtxVersion"
+    implementation "com.google.firebase:firebase-analytics-ktx:$analyticsKtxVersion"
 
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"

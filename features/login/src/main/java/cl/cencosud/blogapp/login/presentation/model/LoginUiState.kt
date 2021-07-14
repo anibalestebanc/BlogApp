@@ -1,4 +1,4 @@
-package cl.cencosud.blogapp.login.presentation
+package cl.cencosud.blogapp.login.presentation.model
 
 sealed class LoginUiState {
     object DefaultState : LoginUiState()

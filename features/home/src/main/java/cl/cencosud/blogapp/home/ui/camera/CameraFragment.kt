@@ -96,6 +96,14 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

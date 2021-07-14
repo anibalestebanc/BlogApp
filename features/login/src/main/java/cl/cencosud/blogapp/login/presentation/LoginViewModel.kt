@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cl.cencosud.blogapp.login.domain.SignInUseCase
+import cl.cencosud.blogapp.login.presentation.model.LoginUiState
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import kotlinx.coroutines.launch
 import javax.inject.Inject

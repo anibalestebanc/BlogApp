@@ -10,12 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import cl.cencosud.blogapp.android.core.hide
 import cl.cencosud.blogapp.android.core.show
 import cl.cencosud.blogapp.home.R
-import cl.cencosud.blogapp.home.data.home.HomeRepositoryImpl
-import cl.cencosud.blogapp.home.data.home.remote.HomeRemoteImpl
 import cl.cencosud.blogapp.home.databinding.FragmentHomeScreenBinding
 import cl.cencosud.blogapp.home.presentation.home.HomeUiState
 import cl.cencosud.blogapp.home.presentation.home.HomeViewModel
-import cl.cencosud.blogapp.home.presentation.home.HomeViewModelFactory
 import cl.cencosud.blogapp.home.ui.utils.inject
 import javax.inject.Inject
 
@@ -36,6 +33,10 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen) {
         inject()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeScreenBinding.bind(view)
@@ -44,6 +45,14 @@ class HomeFragment : Fragment(R.layout.fragment_home_screen) {
 
     private fun setUpObservers() {
         viewModel.homeStates.observe(viewLifecycleOwner, Observer(::renderUiStates))
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
     }
 
     private fun renderUiStates(homeUiState: HomeUiState) {

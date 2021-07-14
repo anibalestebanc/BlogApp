@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/homeFragment"
+    <item android:id="@+id/home_nav_graph"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="Home"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/cameraFragment"
+    <item android:id="@+id/camera_nav_graph"
         android:icon="@drawable/ic_baseline_add_a_photo_24"
         android:title="Add photo"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/profileFragment"
+    <item android:id="@+id/my_account_nav_graph"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="Profile"
         app:showAsAction="ifRoom"/>

@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import cl.cencosud.blogapp.login.R
 import cl.cencosud.blogapp.login.databinding.FragmentLoginBinding
-import cl.cencosud.blogapp.login.presentation.LoginUiState
+import cl.cencosud.blogapp.login.presentation.model.LoginUiState
 import cl.cencosud.blogapp.login.presentation.LoginViewModel
 import cl.cencosud.blogapp.login.ui.utils.inject
 import javax.inject.Inject
